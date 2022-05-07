@@ -1,7 +1,7 @@
 import { Box, Typography, Button } from '@mui/material'
 
 interface ITitle {
-  button: string
+  button?: string
   title: string
 }
 
@@ -19,9 +19,11 @@ export default function Title({ button, title }: ITitle) {
         {title}
       </Typography>
 
-      <Button color="primary" variant="outlined">
-        {button}
-      </Button>
+      {button && (
+        <Button color="primary" variant="outlined">
+          {button}
+        </Button>
+      )}
     </Box>
   )
 }

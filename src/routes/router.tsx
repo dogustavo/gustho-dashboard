@@ -1,4 +1,4 @@
-import { Home, ProductList } from '@/pages'
+import { Home, ProductList, UserList } from '@/pages'
 
 const routes = [
   {
@@ -9,6 +9,11 @@ const routes = [
   {
     path: '/produtos',
     element: <ProductList />,
+    isAuth: true
+  },
+  {
+    path: '/usuarios',
+    element: <UserList />,
     isAuth: true
   }
 ]
