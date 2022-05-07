@@ -1,9 +1,9 @@
 import LayoutDefault from '@/layout'
 
-export default function Home() {
+export default function ProductList() {
   return (
     <LayoutDefault>
-      <h2>Funcionou</h2>
+      <h2>Produtos Inicio</h2>
     </LayoutDefault>
   )
 }

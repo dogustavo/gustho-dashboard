@@ -8,11 +8,7 @@ import {
   Avatar,
   Typography,
   TextField,
-  FormControlLabel,
-  Checkbox,
-  Button,
-  Grid,
-  Link
+  Button
 } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { LockOutlined } from '@mui/icons-material'
@@ -36,6 +32,10 @@ export default function Login() {
       email: values.get('email'),
       passwprd: values.get('password')
     })
+
+    localStorage.setItem('token', 'aiosjhdoiasyduasghdsuahi')
+
+    navigate('/')
   }
 
   return (
