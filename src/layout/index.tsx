@@ -11,7 +11,6 @@ import {
   Toolbar,
   Divider,
   IconButton,
-  List,
   AppBarProps as MuiAppBarProps,
   Drawer as MuiDrawer,
   AppBar as MuiAppBar
@@ -156,8 +155,9 @@ export default function LayoutDefault({ children }: ILayout) {
           }}
         >
           <Toolbar
+            style={{ paddingLeft: 0, paddingRight: 0 }}
             sx={{
-              paddingTop: '80px',
+              paddingTop: '120px',
               paddingBottom: '50px',
               height: '100%',
               display: 'inherit'
