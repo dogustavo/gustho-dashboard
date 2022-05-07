@@ -1,11 +1,12 @@
 import {
   Button,
   Card,
-  CardContent,
   TextField,
   InputAdornment,
   SvgIcon
 } from '@mui/material'
+
+import { styled } from '@mui/material/styles'
 
 import { Search } from '@mui/icons-material'
 
@@ -14,18 +15,28 @@ interface ISearch {
   action: (event: React.FormEvent<HTMLFormElement>) => void
 }
 
+const CardContent = styled('form')(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+    alignItems: 'flex-end'
+  },
+  [theme.breakpoints.up('md')]: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  }
+}))
+
 export default function CardSearch({ text, action }: ISearch) {
   return (
     <Card sx={{ mt: 5 }}>
       <CardContent
-        component="form"
         onSubmit={action}
         style={{ padding: '16px' }}
         sx={{
           display: 'flex',
           width: '100%',
-          alignItems: 'center',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          gap: '1rem'
         }}
       >
         <TextField

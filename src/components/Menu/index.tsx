@@ -11,60 +11,11 @@ import {
   Drawer as MuiDrawer,
   AppBar as MuiAppBar
 } from '@mui/material'
-
 import { Menu, ChevronLeft, Logout } from '@mui/icons-material'
 
 import { MenuItens } from './menuItens'
 
 const drawerWidth: number = 240
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open'
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  })
-}))
-
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== 'open'
-})(({ theme, open }) => ({
-  '& .MuiDrawer-paper': {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    boxSizing: 'border-box',
-    ...(!open && {
-      overflowX: 'hidden',
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
-      }),
-      width: theme.spacing(7),
-      [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9)
-      }
-    })
-  }
-}))
 
 export default function DrawerMenu() {
   const [open, setOpen] = useState(false)
@@ -76,7 +27,7 @@ export default function DrawerMenu() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar open={open}>
+      <MuiAppBar>
         <Toolbar
           sx={{
             pr: '24px'
@@ -87,8 +38,7 @@ export default function DrawerMenu() {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              width: '100%',
-              ...(open && { justifyContent: 'flex-end' })
+              width: '100%'
             }}
           >
             <IconButton
@@ -98,7 +48,7 @@ export default function DrawerMenu() {
               onClick={toggleDrawer}
               sx={{
                 marginRight: '36px',
-                ...(open && { display: 'none' })
+                ...(open && { opacity: '0' })
               }}
             >
               <Menu />
@@ -109,9 +59,12 @@ export default function DrawerMenu() {
             </IconButton>
           </Box>
         </Toolbar>
-      </AppBar>
-
-      <Drawer variant="permanent" open={open}>
+      </MuiAppBar>
+      <MuiDrawer
+        anchor="left"
+        onClose={() => setOpen(false)}
+        open={open}
+      >
         <Toolbar
           sx={{
             display: 'flex',
@@ -126,10 +79,10 @@ export default function DrawerMenu() {
         </Toolbar>
         <Divider />
 
-        <Box component="nav">
+        <Box component="nav" sx={{ minWidth: '16rem' }}>
           <MenuItens />
         </Box>
-      </Drawer>
+      </MuiDrawer>
     </Box>
   )
 }
