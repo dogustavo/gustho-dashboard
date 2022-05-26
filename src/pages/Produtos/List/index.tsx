@@ -28,27 +28,33 @@ export default function ProductList() {
             data={[
               {
                 name: 'Nintendo',
-                qty: 32
+                qty: 32,
+                sellers: 10
               },
               {
                 name: 'Io Io',
-                qty: 12
+                qty: 12,
+                sellers: 10
               },
               {
                 name: 'Cadeira',
-                qty: 23
+                qty: 23,
+                sellers: 10
               },
               {
                 name: 'Nintendo Ds',
-                qty: 32
+                qty: 32,
+                sellers: 10
               },
               {
                 name: 'Half life',
-                qty: 12
+                qty: 12,
+                sellers: 10
               },
               {
                 name: 'Mouse',
-                qty: 23
+                qty: 23,
+                sellers: 10
               }
             ]}
             rows={[
@@ -59,6 +65,10 @@ export default function ProductList() {
               {
                 header: 'Quantidade',
                 acessor: 'qty'
+              },
+              {
+                header: 'Vendas',
+                acessor: 'sellers'
               }
             ]}
           />

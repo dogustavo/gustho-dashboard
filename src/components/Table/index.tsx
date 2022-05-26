@@ -59,7 +59,7 @@ export default function TableComponent({
         <TableFooter>
           <TableRow>
             <TablePagination
-              count={15}
+              count={1}
               onPageChange={handlePaginate}
               page={paginate.page}
               rowsPerPage={paginate.rowsPerPage}
