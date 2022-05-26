@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import LayoutDefault from '@/layout'
 
 import { CardSearch, BoxTitle, Table } from '@/components'
@@ -5,6 +6,8 @@ import { CardSearch, BoxTitle, Table } from '@/components'
 import { Container, Box } from '@mui/material'
 
 export default function ProductList() {
+  const navigate = useNavigate()
+
   const onSubmit = (
     event: React.FormEvent<HTMLFormElement>
   ): void => {
@@ -18,7 +21,11 @@ export default function ProductList() {
   return (
     <LayoutDefault>
       <Container maxWidth="xl">
-        <BoxTitle button="Novo Produto" title="Lista de Produtos" />
+        <BoxTitle
+          button="Novo Produto"
+          buttonClick={() => navigate('/produtos/novo')}
+          title="Lista de Produtos"
+        />
 
         <CardSearch text="Buscar produto" action={onSubmit} />
 

@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles'
 
 interface ITitle {
   button?: string
+  buttonClick?: () => void
   title: string
 }
 
@@ -18,7 +19,11 @@ const Wrapper = styled('div')(({ theme }) => ({
   }
 }))
 
-export default function Title({ button, title }: ITitle) {
+export default function Title({
+  button,
+  buttonClick,
+  title
+}: ITitle) {
   return (
     <Wrapper
       sx={{
@@ -33,7 +38,11 @@ export default function Title({ button, title }: ITitle) {
       </Typography>
 
       {button && (
-        <Button color="primary" variant="outlined">
+        <Button
+          color="primary"
+          onClick={buttonClick}
+          variant="outlined"
+        >
           {button}
         </Button>
       )}
