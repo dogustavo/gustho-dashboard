@@ -3,36 +3,33 @@ import {
   Routes,
   Route,
   Navigate,
-  Outlet
-} from 'react-router-dom'
+  Outlet,
+} from 'react-router-dom';
 
-import { Login } from '@/pages'
+import { Login } from '@/pages';
 
-import routes from './router'
+import routes from './router';
 
 interface IRoutes {
-  isLogged: boolean
+  isLogged: boolean;
 }
 
 const PrivateRoute = ({ isLogged }: IRoutes) => {
-  const isAuth = localStorage.getItem('token') !== null
+  const isAuth = localStorage.getItem('token') !== null;
 
   if (!isAuth && isLogged) {
-    return <Navigate to="/login" />
+    return <Navigate to="/login" />;
   }
 
-  return <Outlet />
-}
+  return <Outlet />;
+};
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
         {routes.map((route, id) => (
-          <Route
-            key={id}
-            element={<PrivateRoute isLogged={route.isAuth} />}
-          >
+          <Route key={id} element={<PrivateRoute isLogged={route.isAuth} />}>
             <Route element={route.element} path={route.path} />
           </Route>
         ))}
@@ -40,5 +37,5 @@ export default function Router() {
         <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }

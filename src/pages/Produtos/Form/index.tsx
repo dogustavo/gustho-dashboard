@@ -1,13 +1,9 @@
-import LayoutDefault from '@/layout'
+import LayoutDefault from '@/layout';
 
-import { BoxTitle } from '@/components'
+import { BoxTitle, Editor } from '@/components';
 
-import {
-  Container,
-  Box,
-  TextField,
-  InputAdornment
-} from '@mui/material'
+import { Container, Box, TextField, InputAdornment } from '@mui/material';
+import { useState } from 'react';
 
 // id: string
 //   name: string
@@ -18,17 +14,22 @@ import {
 //   short_description: string
 //   description: string
 
+// Import React dependencies.
+
 export default function ProductRegister() {
+  const [editorText, setEditorText] = useState('');
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    const values = new FormData(event.currentTarget)
+    const formData = new FormData(event.currentTarget);
 
-    console.log({
-      email: values.get('email'),
-      passwprd: values.get('password')
-    })
-  }
+    // console.log(values.get('name'), editorText);
+
+    for (const [key, value] of formData) {
+      console.log(key, value);
+    }
+  };
 
   return (
     <LayoutDefault>
@@ -61,10 +62,8 @@ export default function ProductRegister() {
                 name="price"
                 InputProps={{
                   startAdornment: (
-                    <InputAdornment position="start">
-                      $
-                    </InputAdornment>
-                  )
+                    <InputAdornment position="start">$</InputAdornment>
+                  ),
                 }}
                 autoFocus
               />
@@ -78,7 +77,7 @@ export default function ProductRegister() {
                 autoFocus
               />
             </Box>
-            <Box sx={{ display: 'flex', gap: '1rem' }}>
+            <Box sx={{ display: 'flex', gap: '1rem', marginBottom: 8 }}>
               <TextField
                 required
                 multiline
@@ -90,9 +89,12 @@ export default function ProductRegister() {
                 autoFocus
               />
             </Box>
+            <Editor content={editorText} setContent={setEditorText} />
+
+            <button>enviar</button>
           </Box>
         </Box>
       </Container>
     </LayoutDefault>
-  )
+  );
 }
