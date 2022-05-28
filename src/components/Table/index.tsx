@@ -9,31 +9,27 @@ import {
   TableCell,
   TableBody,
   TablePagination,
-  TableFooter
-} from '@mui/material'
+  TableFooter,
+} from '@mui/material';
 
 interface ITable {
-  data: any[]
-  rows: IRows[]
-  paginate: IPagination
+  data: any[];
+  rows: IRows[];
+  paginate: IPagination;
 }
 
 interface IRows {
-  header: string
-  acessor: string
+  header: string;
+  acessor: string;
 }
 
 interface IPagination {
-  page: number
-  rowsPerPage: number
+  page: number;
+  rowsPerPage: number;
 }
 
-export default function TableComponent({
-  data,
-  rows,
-  paginate
-}: ITable) {
-  const handlePaginate = () => alert('teset')
+export default function TableComponent({ data, rows, paginate }: ITable) {
+  const handlePaginate = () => alert('teset');
 
   return (
     <TableContainer component={Paper}>
@@ -65,12 +61,12 @@ export default function TableComponent({
               rowsPerPage={paginate.rowsPerPage}
               labelRowsPerPage={<span>Listar:</span>}
               labelDisplayedRows={({ page, to }) => {
-                return `${page} - ${to}`
+                return `${page} - ${to}`;
               }}
             />
           </TableRow>
         </TableFooter>
       </Table>
     </TableContainer>
-  )
+  );
 }

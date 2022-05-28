@@ -2,33 +2,56 @@ import LayoutDefault from '@/layout';
 
 import { BoxTitle, Editor } from '@/components';
 
-import { Container, Box, TextField, InputAdornment } from '@mui/material';
+import {
+  Container,
+  Box,
+  TextField,
+  InputAdornment,
+  IconButton,
+  ImageList,
+  ImageListItem,
+} from '@mui/material';
 import { useState } from 'react';
-
-// id: string
-//   name: string
-//   slug: string
-//   price: number
-//   quantity: number
-//   images: string[]
-//   short_description: string
-//   description: string
-
-// Import React dependencies.
+import { PhotoCamera } from '@mui/icons-material';
 
 export default function ProductRegister() {
   const [editorText, setEditorText] = useState('');
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+    const images = formData.getAll('images');
 
-    // console.log(values.get('name'), editorText);
+    if (images.length < 2 || images.length > 3) {
+      console.log('invalido images');
+      return;
+    }
+
+    if (!editorText) {
+      console.log('invalido editorText');
+      return;
+    }
 
     for (const [key, value] of formData) {
       console.log(key, value);
     }
+  };
+
+  const handleShowSelectedImages = (
+    evt: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const fileList = evt.target.files;
+    let images = [];
+
+    if (fileList) {
+      for (let i = 0; i < fileList.length; i++) {
+        images.push(URL.createObjectURL(fileList[i]));
+      }
+    }
+
+    setPreviewImages(images);
   };
 
   return (
@@ -46,7 +69,6 @@ export default function ProductRegister() {
             <Box sx={{ display: 'flex', gap: '1rem' }}>
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 id="name"
                 label="Nome"
@@ -55,7 +77,6 @@ export default function ProductRegister() {
               />
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 id="price"
                 label="Preço"
@@ -65,31 +86,63 @@ export default function ProductRegister() {
                     <InputAdornment position="start">$</InputAdornment>
                   ),
                 }}
-                autoFocus
               />
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 id="quantity"
                 label="Quantidade"
                 name="quantity"
-                autoFocus
               />
             </Box>
             <Box sx={{ display: 'flex', gap: '1rem', marginBottom: 8 }}>
               <TextField
-                required
                 multiline
                 fullWidth
                 rows={2}
                 id="short_description"
                 label="Descrição curta"
                 name="short_description"
-                autoFocus
               />
             </Box>
             <Editor content={editorText} setContent={setEditorText} />
+
+            <label htmlFor="images">
+              <input
+                accept=".jpg, .jpeg, .png"
+                name="images"
+                multiple
+                id="images"
+                type="file"
+                onChange={(e) => handleShowSelectedImages(e)}
+                hidden
+              />
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+              >
+                <PhotoCamera />
+              </IconButton>
+
+              {
+                previewImages && (
+                  <ImageList
+                    sx={{ width: 500, height: 'auto' }}
+                    cols={3}
+                    rowHeight={164}
+                  >
+                    {previewImages.map((item) => (
+                      <ImageListItem key={item}>
+                        <img src={item} alt={item} loading="lazy" />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                )
+                // previewImages.map((el, id) => (
+                //   <img src={el} key={id} alt="teste" />
+              }
+            </label>
 
             <button>enviar</button>
           </Box>

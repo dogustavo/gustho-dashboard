@@ -1,22 +1,20 @@
-import { useNavigate } from 'react-router-dom'
-import LayoutDefault from '@/layout'
+import { useNavigate } from 'react-router-dom';
+import LayoutDefault from '@/layout';
 
-import { CardSearch, BoxTitle, Table } from '@/components'
+import { CardSearch, BoxTitle, Table } from '@/components';
 
-import { Container, Box } from '@mui/material'
+import { Container, Box } from '@mui/material';
 
 export default function ProductList() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const onSubmit = (
-    event: React.FormEvent<HTMLFormElement>
-  ): void => {
-    event.preventDefault()
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
 
-    const values = new FormData(event.currentTarget)
+    const values = new FormData(event.currentTarget);
 
-    console.log(values.get('search'))
-  }
+    console.log(values.get('search'));
+  };
 
   return (
     <LayoutDefault>
@@ -31,56 +29,56 @@ export default function ProductList() {
 
         <Box component="div" sx={{ marginTop: 8, paddingBottom: 8 }}>
           <Table
-            paginate={{ page: 1, rowsPerPage: 10 }}
+            paginate={{ page: 0, rowsPerPage: 5 }}
             data={[
               {
                 name: 'Nintendo',
                 qty: 32,
-                sellers: 10
+                sellers: 10,
               },
               {
                 name: 'Io Io',
                 qty: 12,
-                sellers: 10
+                sellers: 10,
               },
               {
                 name: 'Cadeira',
                 qty: 23,
-                sellers: 10
+                sellers: 10,
               },
               {
                 name: 'Nintendo Ds',
                 qty: 32,
-                sellers: 10
+                sellers: 10,
               },
               {
                 name: 'Half life',
                 qty: 12,
-                sellers: 10
+                sellers: 10,
               },
               {
                 name: 'Mouse',
                 qty: 23,
-                sellers: 10
-              }
+                sellers: 10,
+              },
             ]}
             rows={[
               {
                 header: 'Teste',
-                acessor: 'name'
+                acessor: 'name',
               },
               {
                 header: 'Quantidade',
-                acessor: 'qty'
+                acessor: 'qty',
               },
               {
                 header: 'Vendas',
-                acessor: 'sellers'
-              }
+                acessor: 'sellers',
+              },
             ]}
           />
         </Box>
       </Container>
     </LayoutDefault>
-  )
+  );
 }
