@@ -97,6 +97,7 @@ export default function ProductRegister() {
                 id="quantity"
                 label="Quantidade"
                 name="quantity"
+                type="number"
               />
             </Box>
             <Box
@@ -113,38 +114,41 @@ export default function ProductRegister() {
             </Box>
             <Editor content={editorText} setContent={setEditorText} />
 
-            <label htmlFor="images">
-              <input
-                accept=".jpg, .jpeg, .png"
-                name="images"
-                multiple
-                id="images"
-                type="file"
-                onChange={(e) => handleShowSelectedImages(e)}
-                hidden
-              />
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="span"
-              >
-                <PhotoCamera />
-              </IconButton>
-
-              {previewImages && (
-                <ImageList
-                  sx={{ width: 500, height: 'auto' }}
-                  cols={3}
-                  rowHeight={164}
+            <div>
+              <p>Imagens do produto</p>
+              <label htmlFor="images">
+                <input
+                  accept=".jpg, .jpeg, .png"
+                  name="images"
+                  multiple
+                  id="images"
+                  type="file"
+                  onChange={(e) => handleShowSelectedImages(e)}
+                  hidden
+                />
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
                 >
-                  {previewImages.map((item) => (
-                    <ImageListItem key={item}>
-                      <img src={item} alt={item} loading="lazy" />
-                    </ImageListItem>
-                  ))}
-                </ImageList>
-              )}
-            </label>
+                  <PhotoCamera />
+                </IconButton>
+
+                {previewImages && (
+                  <ImageList
+                    sx={{ width: 500, height: 'auto' }}
+                    cols={3}
+                    rowHeight={164}
+                  >
+                    {previewImages.map((item) => (
+                      <ImageListItem key={item}>
+                        <img src={item} alt={item} loading="lazy" />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                )}
+              </label>
+            </div>
 
             <button>enviar</button>
           </Box>
