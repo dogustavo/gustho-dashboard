@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { PhotoCamera } from '@mui/icons-material';
 
 export default function ProductRegister() {
-  const [editorText, setEditorText] = useState('');
+  const [editorText, setEditorText] = useState<string>('');
   const [previewImages, setPreviewImages] = useState<string[]>([]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -53,6 +53,8 @@ export default function ProductRegister() {
 
     setPreviewImages(images);
   };
+
+  console.log(editorText);
 
   return (
     <LayoutDefault>
@@ -93,6 +95,7 @@ export default function ProductRegister() {
                 id="quantity"
                 label="Quantidade"
                 name="quantity"
+                type="number"
               />
             </Box>
             <Box sx={{ display: 'flex', gap: '1rem', marginBottom: 8 }}>
@@ -107,26 +110,27 @@ export default function ProductRegister() {
             </Box>
             <Editor content={editorText} setContent={setEditorText} />
 
-            <label htmlFor="images">
-              <input
-                accept=".jpg, .jpeg, .png"
-                name="images"
-                multiple
-                id="images"
-                type="file"
-                onChange={(e) => handleShowSelectedImages(e)}
-                hidden
-              />
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="span"
-              >
-                <PhotoCamera />
-              </IconButton>
+            <div>
+              <p>Imagens do produto</p>
+              <label htmlFor="images">
+                <input
+                  accept=".jpg, .jpeg, .png"
+                  name="images"
+                  multiple
+                  id="images"
+                  type="file"
+                  onChange={(e) => handleShowSelectedImages(e)}
+                  hidden
+                />
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
+                >
+                  <PhotoCamera />
+                </IconButton>
 
-              {
-                previewImages.length > 0 && (
+                {previewImages && (
                   <ImageList
                     sx={{ width: 500, height: 'auto' }}
                     cols={3}
@@ -138,11 +142,9 @@ export default function ProductRegister() {
                       </ImageListItem>
                     ))}
                   </ImageList>
-                )
-                // previewImages.map((el, id) => (
-                //   <img src={el} key={id} alt="teste" />
-              }
-            </label>
+                )}
+              </label>
+            </div>
 
             <button>enviar</button>
           </Box>
