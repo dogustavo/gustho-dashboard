@@ -1,6 +1,8 @@
 import { useRef } from 'react'
 import JoditEditor from 'jodit-react'
 
+import './styles.css'
+
 const config = {
   readonly: false,
   placeholder: 'Start typings...',

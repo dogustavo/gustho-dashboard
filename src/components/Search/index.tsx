@@ -15,7 +15,7 @@ interface ISearch {
   action: (event: React.FormEvent<HTMLFormElement>) => void
 }
 
-const CardContent = styled('form')(({ theme }) => ({
+const CardContent = styled('form')(({ theme }: any) => ({
   [theme.breakpoints.down('md')]: {
     flexDirection: 'column',
     alignItems: 'flex-end'

@@ -8,7 +8,7 @@ interface ITitle {
   title: string
 }
 
-const Wrapper = styled('div')(({ theme }) => ({
+const Wrapper = styled('div')(({ theme }: any) => ({
   [theme.breakpoints.down('md')]: {
     flexDirection: 'column',
     alignItems: 'flex-start'
