@@ -126,7 +126,7 @@ export default function ProductRegister() {
               </IconButton>
 
               {
-                previewImages && (
+                previewImages.length > 0 && (
                   <ImageList
                     sx={{ width: 500, height: 'auto' }}
                     cols={3}

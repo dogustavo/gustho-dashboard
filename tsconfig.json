@@ -4,7 +4,8 @@
     "paths": {
       "@/*": ["*"]
     },
-    "target": "es5",
+    "types": ["vite/client"],
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext", "es5"],
     "allowJs": true,
     "skipLibCheck": true,

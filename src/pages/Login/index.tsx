@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 
 import {
   Container,
@@ -8,35 +9,48 @@ import {
   Avatar,
   Typography,
   TextField,
-  Button
-} from '@mui/material'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { LockOutlined } from '@mui/icons-material'
+  Button,
+} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { LockOutlined } from '@mui/icons-material';
+import { authLogin, ILogin } from '@/serivce';
+import { useAuth } from '@/models/indext';
 
 export default function Login() {
-  const navigate = useNavigate()
-  const theme = createTheme()
+  const navigate = useNavigate();
+  const theme = createTheme();
+
+  const { isAuth, autorize } = useAuth();
+
+  const { mutate, data, isLoading, isSuccess } = useMutation(authLogin);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      navigate('/')
+      navigate('/');
     }
-  }, [])
+  }, []);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const values = new FormData(event.currentTarget);
+    const payload = {
+      mail: values.get('email'),
+      password: values.get('password'),
+    } as ILogin;
 
-    const values = new FormData(event.currentTarget)
+    mutate({ ...payload });
+  };
 
-    console.log({
-      email: values.get('email'),
-      passwprd: values.get('password')
-    })
+  useEffect(() => {
+    if (isSuccess && !isAuth) {
+      autorize({
+        isAuth: !!data?.token,
+        token: data.token,
+      });
 
-    localStorage.setItem('token', 'aiosjhdoiasyduasghdsuahi')
-
-    navigate('/')
-  }
+      navigate('/');
+    }
+  }, [isSuccess]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -45,7 +59,7 @@ export default function Login() {
           height: '100vh',
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
         component="article"
       >
@@ -54,7 +68,7 @@ export default function Login() {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -101,5 +115,5 @@ export default function Login() {
         </Box>
       </Container>
     </ThemeProvider>
-  )
+  );
 }
