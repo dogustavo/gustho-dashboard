@@ -4,6 +4,7 @@ import {
   Route,
   Navigate,
   Outlet,
+  useLocation,
 } from 'react-router-dom';
 
 import { Login } from '@/pages';
@@ -15,11 +16,12 @@ interface IRoutes {
 }
 
 const PrivateRoute = ({ isLogged }: IRoutes) => {
-  const isAuth = localStorage.getItem('token') !== null;
+  const isAuth = localStorage.getItem('userToken');
+  const location = useLocation();
 
-  // if (!isAuth && isLogged) {
-  //   return <Navigate to="/login" />;
-  // }
+  if (!isAuth && isLogged) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
 
   return <Outlet />;
 };

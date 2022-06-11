@@ -1,13 +1,13 @@
-import { DrawerMenu } from '@/components'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { DrawerMenu } from '@/components';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { CssBaseline, Box, Toolbar } from '@mui/material'
+import { CssBaseline, Box, Toolbar } from '@mui/material';
 
 interface ILayout {
-  children: React.ReactElement
+  children: React.ReactElement;
 }
 
-const mdTheme = createTheme()
+const mdTheme = createTheme();
 
 export default function LayoutDefault({ children }: ILayout) {
   return (
@@ -24,7 +24,7 @@ export default function LayoutDefault({ children }: ILayout) {
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: '100vh',
-            overflow: 'auto'
+            overflow: 'auto',
           }}
         >
           <Toolbar
@@ -33,7 +33,7 @@ export default function LayoutDefault({ children }: ILayout) {
               paddingTop: '120px',
               paddingBottom: '50px',
               height: '100%',
-              display: 'inherit'
+              display: 'inherit',
             }}
           >
             {children}
@@ -41,5 +41,5 @@ export default function LayoutDefault({ children }: ILayout) {
         </Box>
       </Box>
     </ThemeProvider>
-  )
+  );
 }

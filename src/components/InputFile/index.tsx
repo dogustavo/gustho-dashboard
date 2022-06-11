@@ -8,9 +8,10 @@ import { getBase64 } from '@/utils';
 
 interface IInput extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
+  label: string;
 }
 
-export default function Input({ name, required }: IInput) {
+export default function Input({ name, label }: IInput) {
   const [previewImages, setPreviewImages] = useState<string[]>();
   const {
     setValue,
@@ -36,7 +37,7 @@ export default function Input({ name, required }: IInput) {
 
   return (
     <div>
-      <p>Imagens do produto</p>
+      <p>{label}</p>
       {errors[name] && <Alert severity="error">{errors[name].message}</Alert>}
       <label htmlFor="images">
         <input

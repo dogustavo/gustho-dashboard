@@ -1,26 +1,26 @@
-import { Home, ProductList, UserList, ProductRegister } from '@/pages'
+import { Home, ProductList, UserList, ProductRegister } from '@/pages';
 
 const routes = [
   {
     path: '/',
     element: <Home />,
-    isAuth: true
+    isAuth: true,
   },
   {
     path: '/produtos',
     element: <ProductList />,
-    isAuth: true
+    isAuth: true,
   },
   {
     path: '/produtos/novo',
     element: <ProductRegister />,
-    isAuth: true
+    isAuth: true,
   },
   {
     path: '/usuarios',
     element: <UserList />,
-    isAuth: true
-  }
-]
+    isAuth: true,
+  },
+];
 
-export default routes
+export default routes;

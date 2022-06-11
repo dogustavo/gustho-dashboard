@@ -1,9 +1,10 @@
-import LayoutDefault from '@/layout'
+import LayoutDefault from '@/layout';
+import { Container } from '@mui/material';
 
 export default function Home() {
   return (
     <LayoutDefault>
-      <h2>Funcionou</h2>
+      <Container maxWidth="xl"></Container>
     </LayoutDefault>
-  )
+  );
 }

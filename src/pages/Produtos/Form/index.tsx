@@ -23,24 +23,9 @@ const Wrapper = styled('div')(({ theme }: any) => ({
 export default function ProductRegister() {
   const methods = useForm({ resolver: yupResolver(schema) });
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = methods.handleSubmit(async (values) => {
     console.log(values);
-    // const images = formData.getAll('images');
-    // if (images.length < 2 || images.length > 3) {
-    //   console.log('invalido images');
-    //   return;
-    // }
-    // if (!editorText) {
-    //   console.log('invalido editorText');
-    //   return;
-    // }
-    // const convertedImages = await Promise.all(
-    //   images.map((image) => getBase64(image))
-    // );
-    // for (const [key, value] of formData) {
-    //   console.log(key, value);
-    // }
-  };
+  });
 
   return (
     <LayoutDefault>
@@ -51,18 +36,22 @@ export default function ProductRegister() {
           <Box component="div" sx={{ marginTop: 8, paddingBottom: 8 }}>
             <Box
               component="form"
-              onSubmit={methods.handleSubmit(handleSubmit)}
+              onSubmit={handleSubmit}
               noValidate
-              sx={{ mt: 1 }}
+              sx={{
+                mt: 1,
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
             >
               <Box sx={{ alignSelf: 'flex-start' }}>
-                <InputFile name="images" />
+                <InputFile name="images" label="Fotos do produto" />
               </Box>
 
               <Wrapper>
                 <Input fullWidth id="name" label="Nome" name="name" autoFocus />
                 <Input
-                  margin="normal"
                   id="price"
                   label="Preço"
                   name="price"
@@ -74,7 +63,6 @@ export default function ProductRegister() {
                   }}
                 />
                 <Input
-                  margin="normal"
                   id="quantity"
                   label="Quantidade"
                   name="quantity"
@@ -93,7 +81,6 @@ export default function ProductRegister() {
                 }}
               >
                 <Input
-                  margin="normal"
                   id="short_description"
                   label="Descrição curta"
                   name="short_description"
@@ -105,7 +92,15 @@ export default function ProductRegister() {
                 <Editor name="description" />
               </Box>
 
-              <Button color="primary" variant="contained" type="submit">
+              <Button
+                sx={{
+                  marginTop: '1rem',
+                  alignSelf: 'flex-end',
+                }}
+                color="primary"
+                variant="contained"
+                type="submit"
+              >
                 Enviar
               </Button>
             </Box>

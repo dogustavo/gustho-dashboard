@@ -12,6 +12,7 @@ export const signIn = (state: AuthState) => {
 
 export const signOut = () => {
   localStorage.removeItem('userToken');
+  window.location.reload();
 
   return { isAuth: false, token: '' };
 };

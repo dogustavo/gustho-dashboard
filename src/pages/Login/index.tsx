@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
+import { useForm, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
   Container,
@@ -13,33 +15,31 @@ import {
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LockOutlined } from '@mui/icons-material';
-import { authLogin, ILogin } from '@/serivce';
-import { useAuth } from '@/models/indext';
+
+import { Input } from '@/components';
+import { authLogin } from '@/serivce';
+import { useAuth } from '@/models';
+
+import schema from './validation';
 
 export default function Login() {
   const navigate = useNavigate();
   const theme = createTheme();
+  const methods = useForm({ resolver: yupResolver(schema) });
 
   const { isAuth, autorize } = useAuth();
 
   const { mutate, data, isLoading, isSuccess } = useMutation(authLogin);
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('userToken')) {
       navigate('/');
     }
   }, []);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const values = new FormData(event.currentTarget);
-    const payload = {
-      mail: values.get('email'),
-      password: values.get('password'),
-    } as ILogin;
-
-    mutate({ ...payload });
-  };
+  const handleSubmit = methods.handleSubmit(async ({ mail, password }) => {
+    mutate({ mail, password });
+  });
 
   useEffect(() => {
     if (isSuccess && !isAuth) {
@@ -77,41 +77,34 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Gustho
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Senha"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+          <FormProvider {...methods}>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
             >
-              Entrar
-            </Button>
-          </Box>
+              <Input required id="mail" label="Email" name="mail" autoFocus />
+              <Input
+                required
+                name="password"
+                label="Senha"
+                id="password"
+                autoComplete="current-password"
+                textFieldProps={{
+                  type: 'password',
+                }}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Entrar
+              </Button>
+            </Box>
+          </FormProvider>
         </Box>
       </Container>
     </ThemeProvider>

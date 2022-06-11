@@ -1,3 +1,4 @@
+import Auth from './Auth';
 import CardSearch from './Search';
 import DrawerMenu from './Menu';
 import Table from './Table';
@@ -7,4 +8,13 @@ import InputFile from './InputFile';
 
 import { BoxTitle } from './Box';
 
-export { CardSearch, DrawerMenu, BoxTitle, Table, Editor, Input, InputFile };
+export {
+  Auth,
+  CardSearch,
+  DrawerMenu,
+  BoxTitle,
+  Table,
+  Editor,
+  Input,
+  InputFile,
+};

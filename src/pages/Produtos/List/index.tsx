@@ -1,20 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import LayoutDefault from '@/layout';
-
+import { FormProvider, useForm } from 'react-hook-form';
 import { CardSearch, BoxTitle, Table } from '@/components';
 
+import LayoutDefault from '@/layout';
 import { Container, Box } from '@mui/material';
 
 export default function ProductList() {
   const navigate = useNavigate();
+  const methods = useForm();
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-
-    const values = new FormData(event.currentTarget);
-
-    console.log(values.get('search'));
-  };
+  const onSubmit = methods.handleSubmit(async (values) => {
+    console.log(values);
+  });
 
   return (
     <LayoutDefault>
@@ -25,7 +22,9 @@ export default function ProductList() {
           title="Lista de Produtos"
         />
 
-        <CardSearch text="Buscar produto" action={onSubmit} />
+        <FormProvider {...methods}>
+          <CardSearch text="Buscar produto" action={onSubmit} />
+        </FormProvider>
 
         <Box component="div" sx={{ marginTop: 8, paddingBottom: 8 }}>
           <Table
