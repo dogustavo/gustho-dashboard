@@ -17,9 +17,9 @@ interface IRoutes {
 const PrivateRoute = ({ isLogged }: IRoutes) => {
   const isAuth = localStorage.getItem('token') !== null;
 
-  if (!isAuth && isLogged) {
-    return <Navigate to="/login" />;
-  }
+  // if (!isAuth && isLogged) {
+  //   return <Navigate to="/login" />;
+  // }
 
   return <Outlet />;
 };

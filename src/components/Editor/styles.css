@@ -1,3 +1,8 @@
 .jodit-react-container {
   width: 100%;
 }
+
+.jodit-add-new-line,
+.jodit-add-new-line_after {
+  display: none;
+}
