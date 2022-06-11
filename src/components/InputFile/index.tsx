@@ -14,7 +14,6 @@ export default function Input({ name, required }: IInput) {
   const [previewImages, setPreviewImages] = useState<string[]>();
   const {
     setValue,
-    setError,
     register,
     formState: { errors },
   } = useFormContext();
@@ -26,15 +25,6 @@ export default function Input({ name, required }: IInput) {
     let converted: string[] = [];
 
     if (fileList) {
-      if (fileList.length > 3) {
-        // setError(true);
-        setError(name, {
-          type: 'custom',
-          message: 'Suporte máximo para 3 imagens',
-        });
-        return;
-      }
-
       for (let i = 0; i < fileList.length; i++) {
         converted.push((await getBase64(fileList[i])) as string);
       }
@@ -68,21 +58,21 @@ export default function Input({ name, required }: IInput) {
         >
           <PhotoCamera />
         </IconButton>
-
-        {previewImages && (
-          <ImageList
-            sx={{ maxWidth: 500, height: 'auto' }}
-            cols={3}
-            rowHeight={164}
-          >
-            {previewImages.map((item: string) => (
-              <ImageListItem key={item}>
-                <img src={item} alt={item} loading="lazy" />
-              </ImageListItem>
-            ))}
-          </ImageList>
-        )}
       </label>
+
+      {previewImages && (
+        <ImageList
+          sx={{ maxWidth: 500, height: 'auto' }}
+          cols={3}
+          rowHeight={164}
+        >
+          {previewImages.map((item: string) => (
+            <ImageListItem key={item}>
+              <img src={item} alt={item} loading="lazy" />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      )}
     </div>
   );
 }

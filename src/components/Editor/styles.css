@@ -6,3 +6,7 @@
 .jodit-add-new-line_after {
   display: none;
 }
+
+.active-error {
+  border: 1px solid #d32f2f !important;
+}

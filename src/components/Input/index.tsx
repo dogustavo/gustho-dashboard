@@ -31,7 +31,8 @@ export default function Input({
             onChange={field.onChange}
             value={field.value || ''}
             label={label}
-            error={errors[name]}
+            error={!!errors[name]}
+            helperText={errors[name]?.message}
             margin="normal"
             fullWidth
             InputProps={{ ...textFieldProps }}
