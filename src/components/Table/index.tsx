@@ -1,5 +1,3 @@
-// import { DataG} from '@mui/material'
-
 import {
   Paper,
   TableContainer,
@@ -9,27 +7,42 @@ import {
   TableCell,
   TableBody,
   TablePagination,
-  TableFooter,
-} from '@mui/material';
+  TableFooter
+} from '@mui/material'
 
+//TODO IFILTER GLOBAL
+interface IFilter {
+  page: number
+  limit: number
+  search: string
+}
 interface ITable {
-  data: any[];
-  rows: IRows[];
-  paginate: IPagination;
+  data: any[]
+  rows: IRows[]
+  paginate: IPagination
+  setFilter: (props: IFilter) => void
+  filter: IFilter
 }
 
 interface IRows {
-  header: string;
-  acessor: string;
+  header: string
+  acessor: string
 }
 
 interface IPagination {
-  page: number;
-  rowsPerPage: number;
+  page: number
+  rowsPerPage: number
+  count: number
 }
 
-export default function TableComponent({ data, rows, paginate }: ITable) {
-  const handlePaginate = () => alert('teset');
+export default function TableComponent({
+  data,
+  rows,
+  setFilter,
+  paginate
+}: ITable) {
+  const handlePaginate = (newPage: number) =>
+    setFilter((value: any) => ({ ...value, page: newPage + 1 }))
 
   return (
     <TableContainer component={Paper}>
@@ -41,7 +54,6 @@ export default function TableComponent({ data, rows, paginate }: ITable) {
             ))}
           </TableRow>
         </TableHead>
-
         <TableBody>
           {data.map((item, id) => (
             <TableRow key={id}>
@@ -51,22 +63,21 @@ export default function TableComponent({ data, rows, paginate }: ITable) {
             </TableRow>
           ))}
         </TableBody>
-
         <TableFooter>
           <TableRow>
             <TablePagination
-              count={1}
+              count={paginate.count}
+              page={paginate.page - 1}
+              rowsPerPage={10}
+              rowsPerPageOptions={[]}
               onPageChange={handlePaginate}
-              page={paginate.page}
-              rowsPerPage={paginate.rowsPerPage}
-              labelRowsPerPage={<span>Listar:</span>}
-              labelDisplayedRows={({ page, to }) => {
-                return `${page} - ${to}`;
+              labelDisplayedRows={(props) => {
+                return `${props.to} itens de ${props.count}`
               }}
             />
           </TableRow>
         </TableFooter>
       </Table>
     </TableContainer>
-  );
+  )
 }

@@ -1,17 +1,55 @@
-import { useNavigate } from 'react-router-dom';
-import { FormProvider, useForm } from 'react-hook-form';
-import { CardSearch, BoxTitle, Table } from '@/components';
+import { useState, useEffect } from 'react'
+import { useQuery } from 'react-query'
+import { useNavigate } from 'react-router-dom'
+import { FormProvider, useForm } from 'react-hook-form'
 
-import LayoutDefault from '@/layout';
-import { Container, Box } from '@mui/material';
+import { CardSearch, BoxTitle, Table } from '@/components'
+import LayoutDefault from '@/layout'
+import { Container, Box } from '@mui/material'
+
+import { getProducts } from '@/serivce'
+import { formatMoney } from '@/utils'
 
 export default function ProductList() {
-  const navigate = useNavigate();
-  const methods = useForm();
+  const navigate = useNavigate()
+  const methods = useForm()
+
+  const [products, setProducts] = useState<any>([])
+
+  const [filter, setFilter] = useState({
+    page: 1,
+    limit: 10,
+    search: ''
+  })
+
+  const {
+    data: allProducts,
+    isLoading,
+    isSuccess
+  } = useQuery(
+    ['getAllProducts', filter],
+    () => getProducts(filter),
+    {
+      keepPreviousData: true
+    }
+  )
 
   const onSubmit = methods.handleSubmit(async (values) => {
-    console.log(values);
-  });
+    console.log(values)
+  })
+
+  useEffect(() => {
+    if (isSuccess) {
+      const table = allProducts?.data.map((product) => ({
+        id: product.id,
+        name: product.name,
+        qty: product.quantity,
+        price: formatMoney(product.price)
+      }))
+
+      setProducts(table)
+    }
+  }, [isSuccess])
 
   return (
     <LayoutDefault>
@@ -28,56 +66,35 @@ export default function ProductList() {
 
         <Box component="div" sx={{ marginTop: 8, paddingBottom: 8 }}>
           <Table
-            paginate={{ page: 0, rowsPerPage: 5 }}
-            data={[
-              {
-                name: 'Nintendo',
-                qty: 32,
-                sellers: 10,
-              },
-              {
-                name: 'Io Io',
-                qty: 12,
-                sellers: 10,
-              },
-              {
-                name: 'Cadeira',
-                qty: 23,
-                sellers: 10,
-              },
-              {
-                name: 'Nintendo Ds',
-                qty: 32,
-                sellers: 10,
-              },
-              {
-                name: 'Half life',
-                qty: 12,
-                sellers: 10,
-              },
-              {
-                name: 'Mouse',
-                qty: 23,
-                sellers: 10,
-              },
-            ]}
+            paginate={{
+              count: allProducts?.total || 1,
+              page: allProducts?.page || 1,
+              rowsPerPage: allProducts?.limit || 10
+            }}
+            setFilter={setFilter}
+            filter={filter}
+            data={products}
             rows={[
               {
-                header: 'Teste',
-                acessor: 'name',
+                header: 'ID',
+                acessor: 'id'
+              },
+              {
+                header: 'Nome',
+                acessor: 'name'
               },
               {
                 header: 'Quantidade',
-                acessor: 'qty',
+                acessor: 'qty'
               },
               {
-                header: 'Vendas',
-                acessor: 'sellers',
-              },
+                header: 'Preço',
+                acessor: 'price'
+              }
             ]}
           />
         </Box>
       </Container>
     </LayoutDefault>
-  );
+  )
 }

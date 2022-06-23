@@ -1,4 +1,4 @@
-import * as yup from 'yup';
+import * as yup from 'yup'
 
 export default yup.object().shape({
   images: yup
@@ -10,8 +10,8 @@ export default yup.object().shape({
   name: yup.string().required('Campo nome do produto é obrigatório'),
   price: yup.number().required('Campo preço é obrigatório'),
   quantity: yup.number().required('Campo quantidade é obrigatório'),
-  short_description: yup
+  shortDescription: yup
     .string()
     .required('Campo descrição curta é obrigatório'),
-  description: yup.string().required('Campo descrição é obrigatório'),
-});
+  description: yup.string().required('Campo descrição é obrigatório')
+})
