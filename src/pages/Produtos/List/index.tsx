@@ -53,7 +53,7 @@ export default function ProductList() {
 
   useEffect(() => {
     if (isSuccess) {
-      const table = allProducts?.data.map((product) => ({
+      const table = allProducts?.data?.map((product) => ({
         id: product.id,
         name: product.name,
         qty: product.quantity,
