@@ -39,10 +39,13 @@ export default function TableComponent({
   data,
   rows,
   setFilter,
+  filter,
   paginate
 }: ITable) {
-  const handlePaginate = (newPage: number) =>
-    setFilter((value: any) => ({ ...value, page: newPage + 1 }))
+  const handlePaginate = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => setFilter({ ...filter, page: newPage + 1 })
 
   return (
     <TableContainer component={Paper}>

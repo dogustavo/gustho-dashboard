@@ -25,7 +25,8 @@ export default function ProductList() {
   const {
     data: allProducts,
     isLoading,
-    isSuccess
+    isSuccess,
+    isFetching
   } = useQuery(
     ['getAllProducts', filter],
     () => getProducts(filter),
@@ -34,8 +35,8 @@ export default function ProductList() {
     }
   )
 
-  const onSubmit = methods.handleSubmit(async (values) => {
-    console.log(values)
+  const onSubmit = methods.handleSubmit(async ({ search }) => {
+    setFilter((state) => ({ ...state, search }))
   })
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function ProductList() {
 
       setProducts(table)
     }
-  }, [isSuccess])
+  }, [isSuccess, isFetching])
 
   return (
     <LayoutDefault>
