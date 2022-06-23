@@ -7,12 +7,7 @@ import {
   ListItemText
 } from '@mui/material'
 
-import {
-  Dashboard,
-  ShoppingCart,
-  People,
-  Inventory
-} from '@mui/icons-material'
+import { Dashboard, People, Inventory } from '@mui/icons-material'
 
 const menuItens = [
   {
@@ -29,11 +24,6 @@ const menuItens = [
     icon: <People />,
     name: 'Usuários',
     goTo: '/usuarios'
-  },
-  {
-    icon: <ShoppingCart />,
-    name: 'Vendas',
-    goTo: '/'
   }
 ]
 

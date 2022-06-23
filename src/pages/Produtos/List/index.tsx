@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { CardSearch, BoxTitle, Table } from '@/components'
+import { CardSearch, BoxTitle, Table, Loading } from '@/components'
 import LayoutDefault from '@/layout'
 import { Container, Box } from '@mui/material'
 
@@ -15,10 +15,10 @@ export default function ProductList() {
   const methods = useForm()
 
   const [products, setProducts] = useState<any>([])
-
+  const [buttonText, setButtonText] = useState('Buscar produto')
   const [filter, setFilter] = useState({
     page: 1,
-    limit: 10,
+    limit: 15,
     search: ''
   })
 
@@ -36,7 +36,19 @@ export default function ProductList() {
   )
 
   const onSubmit = methods.handleSubmit(async ({ search }) => {
+    if (!search) {
+      setFilter({
+        page: 1,
+        limit: 10,
+        search: ''
+      })
+      setButtonText('Buscar produto')
+      return
+    }
+
     setFilter((state) => ({ ...state, search }))
+    setButtonText('Limpar')
+    methods.setValue('search', '')
   })
 
   useEffect(() => {
@@ -62,7 +74,7 @@ export default function ProductList() {
         />
 
         <FormProvider {...methods}>
-          <CardSearch text="Buscar produto" action={onSubmit} />
+          <CardSearch text={buttonText} action={onSubmit} />
         </FormProvider>
 
         <Box component="div" sx={{ marginTop: 8, paddingBottom: 8 }}>
@@ -95,6 +107,7 @@ export default function ProductList() {
             ]}
           />
         </Box>
+        <Loading isOpen={isLoading} />
       </Container>
     </LayoutDefault>
   )
