@@ -17,7 +17,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LockOutlined } from '@mui/icons-material';
 
 import { Input } from '@/components';
-import { authLogin } from '@/serivce';
+import { authLogin } from '@/service';
 import { useAuth } from '@/models';
 
 import schema from './validation';

@@ -1,55 +1,51 @@
-import { useState, useEffect } from 'react'
-import { useQuery } from 'react-query'
-import { useNavigate } from 'react-router-dom'
-import { FormProvider, useForm } from 'react-hook-form'
+import { useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import { CardSearch, BoxTitle, Table, Loading } from '@/components'
-import LayoutDefault from '@/layout'
-import { Container, Box } from '@mui/material'
+import { CardSearch, BoxTitle, Table, Loading } from '@/components';
+import LayoutDefault from '@/layout';
+import { Container, Box } from '@mui/material';
 
-import { getProducts } from '@/serivce'
-import { formatMoney } from '@/utils'
+import { getProducts } from '@/service';
+import { formatMoney } from '@/utils';
 
 export default function ProductList() {
-  const navigate = useNavigate()
-  const methods = useForm()
+  const navigate = useNavigate();
+  const methods = useForm();
 
-  const [products, setProducts] = useState<any>([])
-  const [buttonText, setButtonText] = useState('Buscar produto')
+  const [products, setProducts] = useState<any>([]);
+  const [buttonText, setButtonText] = useState('Buscar produto');
   const [filter, setFilter] = useState({
     page: 1,
     limit: 15,
-    search: ''
-  })
+    search: '',
+  });
 
   const {
     data: allProducts,
     isLoading,
     isSuccess,
-    isFetching
-  } = useQuery(
-    ['getAllProducts', filter],
-    () => getProducts(filter),
-    {
-      keepPreviousData: true
-    }
-  )
+    isFetching,
+  } = useQuery(['getAllProducts', filter], () => getProducts(filter), {
+    keepPreviousData: true,
+  });
 
   const onSubmit = methods.handleSubmit(async ({ search }) => {
     if (!search) {
       setFilter({
         page: 1,
         limit: 10,
-        search: ''
-      })
-      setButtonText('Buscar produto')
-      return
+        search: '',
+      });
+      setButtonText('Buscar produto');
+      return;
     }
 
-    setFilter((state) => ({ ...state, search }))
-    setButtonText('Limpar')
-    methods.setValue('search', '')
-  })
+    setFilter((state) => ({ ...state, search }));
+    setButtonText('Limpar');
+    methods.setValue('search', '');
+  });
 
   useEffect(() => {
     if (isSuccess) {
@@ -57,12 +53,12 @@ export default function ProductList() {
         id: product.id,
         name: product.name,
         qty: product.quantity,
-        price: formatMoney(product.price)
-      }))
+        price: formatMoney(product.price),
+      }));
 
-      setProducts(table)
+      setProducts(table);
     }
-  }, [isSuccess, isFetching])
+  }, [isSuccess, isFetching]);
 
   return (
     <LayoutDefault>
@@ -82,7 +78,7 @@ export default function ProductList() {
             paginate={{
               count: allProducts?.total || 1,
               page: allProducts?.page || 1,
-              rowsPerPage: allProducts?.limit || 10
+              rowsPerPage: allProducts?.limit || 10,
             }}
             setFilter={setFilter}
             filter={filter}
@@ -90,25 +86,25 @@ export default function ProductList() {
             rows={[
               {
                 header: 'ID',
-                acessor: 'id'
+                acessor: 'id',
               },
               {
                 header: 'Nome',
-                acessor: 'name'
+                acessor: 'name',
               },
               {
                 header: 'Quantidade',
-                acessor: 'qty'
+                acessor: 'qty',
               },
               {
                 header: 'Preço',
-                acessor: 'price'
-              }
+                acessor: 'price',
+              },
             ]}
           />
         </Box>
         <Loading isOpen={isLoading} />
       </Container>
     </LayoutDefault>
-  )
+  );
 }

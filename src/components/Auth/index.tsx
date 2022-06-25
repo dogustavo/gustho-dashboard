@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useAuth } from '@/models';
-import api from '@/serivce';
+import api from '@/service';
 
 type IProvider = {
   children: React.ReactNode;
