@@ -10,7 +10,6 @@ import {
   CssBaseline,
   Avatar,
   Typography,
-  TextField,
   Button,
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -29,7 +28,7 @@ export default function Login() {
 
   const { isAuth, autorize } = useAuth();
 
-  const { mutate, data, isLoading, isSuccess } = useMutation(authLogin);
+  const { mutate, data, isSuccess } = useMutation(authLogin);
 
   useEffect(() => {
     if (localStorage.getItem('userToken')) {

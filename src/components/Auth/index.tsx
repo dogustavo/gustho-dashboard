@@ -8,15 +8,10 @@ type IProvider = {
 };
 
 export default function Provider({ children }: IProvider) {
-  const { token, autorize } = useAuth();
+  const userToken = localStorage.getItem('userToken');
+  const { autorize } = useAuth();
 
   useEffect(() => {
-    api.defaults.headers.common.authorization = `Bearer ${token}`;
-  }, [token]);
-
-  useEffect(() => {
-    const userToken = localStorage.getItem('userToken');
-
     if (userToken) {
       api.defaults.headers.common.authorization = `Bearer ${userToken}`;
 
@@ -24,10 +19,8 @@ export default function Provider({ children }: IProvider) {
         isAuth: !!userToken,
         token: userToken,
       });
-
-      //TODO Lógica para buscar informação do user
     }
-  }, [autorize]);
+  }, [userToken]);
 
   return <>{children}</>;
 }

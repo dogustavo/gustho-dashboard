@@ -5,6 +5,7 @@ import { Container, Typography } from '@mui/material';
 import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { formatMoney, convertDate } from '@/utils';
+import { useAuth } from '@/models';
 
 const filter = {
   page: 1,
@@ -13,20 +14,19 @@ const filter = {
 };
 
 export default function Home() {
-  const { data, isLoading, isSuccess, isFetching } = useQuery(
-    ['getCurrentUser'],
-    () => getCurrentUser(),
-    {
-      keepPreviousData: true,
-    }
-  );
+  const { isAuth } = useAuth();
+
+  const { data, isLoading } = useQuery('getCurrentUser', getCurrentUser, {
+    enabled: isAuth,
+    keepPreviousData: true,
+  });
 
   const {
     data: allCheckout,
     isLoading: isLoadingCheckout,
-    isSuccess: isSuccessCheckout,
-    isFetching: isFetchingCheckout,
-  } = useQuery(['getAllCheckout'], () => getCheckout(filter), {
+    isSuccess,
+  } = useQuery('getAllCheckout', () => getCheckout(filter), {
+    enabled: isAuth,
     keepPreviousData: true,
   });
 
@@ -47,42 +47,44 @@ export default function Home() {
       return <></>;
     }
 
-    const dataList = allCheckout?.data.map((item) => ({
-      ...item,
-      total: formatMoney(item.total),
-      createdAt: convertDate(item.createdAt),
-    }));
+    if (isSuccess) {
+      const dataList = allCheckout?.data.map((item) => ({
+        ...item,
+        total: formatMoney(item.total),
+        createdAt: convertDate(item.createdAt),
+      }));
 
-    return (
-      <Table
-        paginate={{
-          count: allCheckout?.total || 1,
-          page: allCheckout?.page || 1,
-          rowsPerPage: allCheckout?.limit || 10,
-        }}
-        setFilter={() => {}}
-        filter={filter}
-        data={dataList as any}
-        rows={[
-          {
-            header: 'ID',
-            acessor: 'id',
-          },
-          {
-            header: 'Total',
-            acessor: 'total',
-          },
-          {
-            header: 'Status',
-            acessor: 'status',
-          },
-          {
-            header: 'Data',
-            acessor: 'createdAt',
-          },
-        ]}
-      />
-    );
+      return (
+        <Table
+          paginate={{
+            count: allCheckout?.total || 1,
+            page: allCheckout?.page || 1,
+            rowsPerPage: allCheckout?.limit || 10,
+          }}
+          setFilter={() => {}}
+          filter={filter}
+          data={dataList as any}
+          rows={[
+            {
+              header: 'ID',
+              acessor: 'id',
+            },
+            {
+              header: 'Total',
+              acessor: 'total',
+            },
+            {
+              header: 'Status',
+              acessor: 'status',
+            },
+            {
+              header: 'Data',
+              acessor: 'createdAt',
+            },
+          ]}
+        />
+      );
+    }
   }, [allCheckout, isLoadingCheckout]);
 
   return (
