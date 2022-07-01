@@ -1,4 +1,5 @@
 import { Home, ProductList, UserList, ProductRegister } from '@/pages';
+import { CheckoutList } from '@/pages/Checkout';
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
   {
     path: '/usuarios',
     element: <UserList />,
+    isAuth: true,
+  },
+  {
+    path: '/compras',
+    element: <CheckoutList />,
     isAuth: true,
   },
 ];

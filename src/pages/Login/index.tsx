@@ -10,14 +10,13 @@ import {
   CssBaseline,
   Avatar,
   Typography,
-  TextField,
   Button,
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LockOutlined } from '@mui/icons-material';
 
 import { Input } from '@/components';
-import { authLogin } from '@/serivce';
+import { authLogin } from '@/service';
 import { useAuth } from '@/models';
 
 import schema from './validation';
@@ -29,7 +28,7 @@ export default function Login() {
 
   const { isAuth, autorize } = useAuth();
 
-  const { mutate, data, isLoading, isSuccess } = useMutation(authLogin);
+  const { mutate, data, isSuccess } = useMutation(authLogin);
 
   useEffect(() => {
     if (localStorage.getItem('userToken')) {

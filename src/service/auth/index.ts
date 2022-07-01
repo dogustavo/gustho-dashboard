@@ -1,5 +1,5 @@
 import axios from 'axios';
-import api from '@/serivce';
+import api from '@/service';
 
 export interface ILogin {
   mail: string;
