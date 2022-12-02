@@ -1,6 +1,6 @@
-import LayoutDefault from '@/layout';
+import LayoutDefault from '@/layout'
 
-import { BoxTitle, Editor } from '@/components';
+import { BoxTitle, Editor } from '@/components'
 
 import {
   Container,
@@ -9,50 +9,52 @@ import {
   InputAdornment,
   IconButton,
   ImageList,
-  ImageListItem,
-} from '@mui/material';
-import { useState } from 'react';
-import { PhotoCamera } from '@mui/icons-material';
+  ImageListItem
+} from '@mui/material'
+import { useState } from 'react'
+import { PhotoCamera } from '@mui/icons-material'
 
 export default function ProductRegister() {
-  const [editorText, setEditorText] = useState('');
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [editorText, setEditorText] = useState<string>('')
+  const [previewImages, setPreviewImages] = useState<string[]>([])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    const formData = new FormData(event.currentTarget);
-    const images = formData.getAll('images');
+    const formData = new FormData(event.currentTarget)
+    const images = formData.getAll('images')
 
     if (images.length < 2 || images.length > 3) {
-      console.log('invalido images');
-      return;
+      console.log('invalido images')
+      return
     }
 
     if (!editorText) {
-      console.log('invalido editorText');
-      return;
+      console.log('invalido editorText')
+      return
     }
 
     for (const [key, value] of formData) {
-      console.log(key, value);
+      console.log(key, value)
     }
-  };
+  }
 
   const handleShowSelectedImages = (
     evt: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const fileList = evt.target.files;
-    let images = [];
+    const fileList = evt.target.files
+    let images = []
 
     if (fileList) {
       for (let i = 0; i < fileList.length; i++) {
-        images.push(URL.createObjectURL(fileList[i]));
+        images.push(URL.createObjectURL(fileList[i]))
       }
     }
 
-    setPreviewImages(images);
-  };
+    setPreviewImages(images)
+  }
+
+  console.log(editorText)
 
   return (
     <LayoutDefault>
@@ -83,8 +85,10 @@ export default function ProductRegister() {
                 name="price"
                 InputProps={{
                   startAdornment: (
-                    <InputAdornment position="start">$</InputAdornment>
-                  ),
+                    <InputAdornment position="start">
+                      $
+                    </InputAdornment>
+                  )
                 }}
               />
               <TextField
@@ -95,7 +99,9 @@ export default function ProductRegister() {
                 name="quantity"
               />
             </Box>
-            <Box sx={{ display: 'flex', gap: '1rem', marginBottom: 8 }}>
+            <Box
+              sx={{ display: 'flex', gap: '1rem', marginBottom: 8 }}
+            >
               <TextField
                 multiline
                 fullWidth
@@ -125,23 +131,19 @@ export default function ProductRegister() {
                 <PhotoCamera />
               </IconButton>
 
-              {
-                previewImages && (
-                  <ImageList
-                    sx={{ width: 500, height: 'auto' }}
-                    cols={3}
-                    rowHeight={164}
-                  >
-                    {previewImages.map((item) => (
-                      <ImageListItem key={item}>
-                        <img src={item} alt={item} loading="lazy" />
-                      </ImageListItem>
-                    ))}
-                  </ImageList>
-                )
-                // previewImages.map((el, id) => (
-                //   <img src={el} key={id} alt="teste" />
-              }
+              {previewImages && (
+                <ImageList
+                  sx={{ width: 500, height: 'auto' }}
+                  cols={3}
+                  rowHeight={164}
+                >
+                  {previewImages.map((item) => (
+                    <ImageListItem key={item}>
+                      <img src={item} alt={item} loading="lazy" />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              )}
             </label>
 
             <button>enviar</button>
@@ -149,5 +151,5 @@ export default function ProductRegister() {
         </Box>
       </Container>
     </LayoutDefault>
-  );
+  )
 }
